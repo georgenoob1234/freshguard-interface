@@ -1,0 +1,27 @@
+version: '3.8'
+
+services:
+  # Main interface application
+  interface:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    environment:
+      - UI_SERVER_URL=${UI_SERVER_URL:-http://localhost:8500}
+      - FLASK_ENV=${FLASK_ENV:-production}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+    volumes:
+      - ./logs:/app/logs  # Mount logs directory if the app writes logs
+
+# Simple network configuration for the interface service
+networks:
+  default:
+    name: interface_network

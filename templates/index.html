@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Камера и фрукт</title>
+  <style>
+    body { margin:0; font-family: Arial, sans-serif; background:#fff; }
+    .container, .staff-modal { display:flex; flex-direction:column; min-height:100vh; position:relative; box-sizing: border-box; }
+
+    /* Верхняя панель на главном экране с цифрами */
+    .top-bar {
+        display:flex; 
+        justify-content:space-between; 
+        padding:1rem 2rem; 
+        background:#f9f9f9; 
+        border-bottom:1px solid #ccc;
+    }
+    .top-bar div { text-align:center; font-size:1.2rem; font-weight: normal; }
+
+    /* Основное содержимое */
+    .main { display:flex; flex:1; background:#065f46; color:white; padding:2rem; gap:2rem; align-items:center; justify-content:center; }
+    .fruit-name { font-size:3rem; font-weight:bold; text-align:center; }
+    .freshness-box {
+        border: 3px solid; 
+        padding: 10px;
+        margin-top: 10px;
+        border-radius: 8px;
+        font-size: 1.2rem;
+        font-weight: bold;
+        text-align: center;
+        background-color: #065f46;
+    }
+    .video-container img { max-width:640px; border-radius:12px; border:2px solid white; }
+
+    /* Нижняя белая полоска на главном экране */
+    .bottom-bar {
+        height: 50px;
+        background:#f9f9f9;
+        position: relative;
+    }
+
+    /* Кнопки персонала и выхода */
+    .staff-button, .close-button {
+        width: 30px;
+        height: 30px;
+        background: white;
+        border: 2px solid black;
+        border-radius: 6px;
+        position: absolute;
+        top: 50%;                
+        right: 10px;             
+        transform: translateY(-50%);
+        cursor: pointer;
+        z-index: 1000;
+        font-size: 18px;          
+        display:flex;
+        justify-content:center;
+        align-items:center;
+    }
+
+    /* Персональное окно */
+    .staff-modal {
+        display: none;
+        position: fixed;
+        top:0; left:0; right:0; bottom:0;
+        z-index: 999;
+        flex-direction: column;
+        color: white;
+    }
+
+    /* Белые полосы и центральная зона персонального окна */
+    .staff-top-bar, .staff-bottom-bar {
+        height: 50px;
+        background: #f9f9f9;
+        position: relative;
+    }
+    .staff-main {
+        flex: 1;
+        background: #065f46;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="container" id="mainInterface">
+
+  <!-- Верхняя панель -->
+  <div class="top-bar">
+    <div>Вес: {{ weight }} кг</div>
+    <div>Цена за кг: {{ price_per_kg }} руб/кг</div>
+    <div>Итоговая цена: {{ total_price }} руб</div>
+  </div>
+
+  <!-- Основное содержимое -->
+  <div class="main">
+    <div class="fruit-name">
+        {{ fruit_name }}
+        <div class="freshness-box" style="border-color: {{ freshness_color }};">
+            {{ freshness }}
+        </div>
+    </div>
+    <div class="video-container">
+      <img src="{{ image_url or '' }}" alt="Live camera">
+    </div>
+  </div>
+
+  <!-- Нижняя белая полоска -->
+  <div class="bottom-bar">
+    <div style="position:absolute; left:10px; top:50%; transform:translateY(-50%);
+                font-size:1.2rem; font-weight: normal; text-align:center;">
+        FPS: {{ fps }}
+    </div>
+    <div class="staff-button" onclick="openStaffModal()">👤</div>
+  </div>
+
+</div>
+
+<!-- Персональное окно -->
+<div class="staff-modal" id="staffModal">
+
+  <div class="staff-top-bar"></div>
+
+  <div class="staff-main">
+    <!-- Пока пустое содержимое персонального окна -->
+  </div>
+
+  <div class="staff-bottom-bar">
+    <div class="close-button" onclick="closeStaffModal()"></div>
+  </div>
+
+</div>
+
+<script>
+  function openStaffModal() {
+    document.getElementById('staffModal').style.display = 'flex';
+    document.getElementById('staffModal').style.flexDirection = 'column';
+    document.getElementById('mainInterface').style.display = 'none';
+  }
+
+  function closeStaffModal() {
+    document.getElementById('staffModal').style.display = 'none';
+document.getElementById('mainInterface').style.display = 'flex';
+  }
+</script>
+
+</body>
+</html>
