@@ -1,3 +1,5 @@
+Deprecated.
+
 # Fruit Weighting System Interface
 
 A Flask-based web application that provides a user interface for a fruit weighing system. The application connects to a backend service to display real-time information about fruits placed on a weighing scale, including weight, price, and freshness assessment.
