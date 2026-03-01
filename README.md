@@ -1,4 +1,4 @@
-Deprecated.
+Deprecated. Merged with https://github.com/georgenoob1234/freshguard-uiserver
 
 # Fruit Weighting System Interface
 
